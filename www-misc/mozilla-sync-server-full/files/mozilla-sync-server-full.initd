@@ -1,0 +1,27 @@
+#!/sbin/runscript
+
+FSYNC_ENV=${FSYNC_ENV:-/etc/mozilla-sync-server/sqlite.ini}
+FSYNC_DIR=${FSYNC_DIR:-/var/lib/mozilla-sync-server}
+FSYNC_PIDFILE="/var/run/mozilla-sync/mozilla-sync.pid"
+FSYNC_USER=${FSYNC_USER:-mozillasync}
+FSYNC_GROUP=${FSYNC_GROUP:-mozillasync}
+
+depend() {
+	use net
+}
+
+start() {
+	ebegin "Starting Mozilla Sync"
+	cd "${FSYNC_DIR}"
+	start-stop-daemon --start --quiet --user ${FSYNC_USER}:${FSYNC_GROUP} \
+		--exec paster serve ${FSYNC_ENV} -- --daemon \
+		--pid-file "${FSYNC_PIDFILE}"
+	eend $?
+}
+
+stop() {
+	ebegin "Stopping Mozilla Sync"
+	cd "${FSYNC_DIR}"
+	start-stop-daemon --signal INT --quiet --pidfile "${FSYNC_PIDFILE}"
+	eend $?
+}
