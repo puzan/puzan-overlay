@@ -40,6 +40,20 @@ DEPEND="${RDEPEND}
 		test? ( dev-python/nose[${PYTHON_USEDEP}] )
 		dev-python/setuptools[${PYTHON_USEDEP}]"
 
+MOZILLA_SYNC_DIR="/var/lib/mozilla-sync-server"
+
+pkg_setup() {
+	enewgroup mozillasync
+	enewuser mozillasync -1 -1 "${MOZILLA_SYNC_DIR}" mozillasync
+}
+
 python_test() {
 	nosetests || die "Tests fail with ${EPYTHON}"
+}
+
+src_install() {
+	distutils-r1_src_install
+
+	fowners :mozillasync /usr/lib/python2.7/site-packages/syncreg/templates
+	fperms g+w /usr/lib/python2.7/site-packages/syncreg/templates
 }

@@ -45,7 +45,6 @@ MOZILLA_SYNC_DIR="/var/lib/mozilla-sync-server"
 
 pkg_setup() {
 	enewgroup mozillasync
-	# home directory is required for SCM.
 	enewuser mozillasync -1 -1 "${MOZILLA_SYNC_DIR}" mozillasync
 }
 
