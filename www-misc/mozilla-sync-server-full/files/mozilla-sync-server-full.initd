@@ -7,21 +7,21 @@ FSYNC_USER=${FSYNC_USER:-mozillasync}
 FSYNC_GROUP=${FSYNC_GROUP:-mozillasync}
 
 depend() {
-	use net
+    use net
 }
 
 start() {
-	ebegin "Starting Mozilla Sync"
-	cd "${FSYNC_DIR}"
-	start-stop-daemon --start --quiet --user ${FSYNC_USER}:${FSYNC_GROUP} \
-		--exec paster serve ${FSYNC_ENV} -- --daemon \
-		--pid-file "${FSYNC_PIDFILE}"
-	eend $?
+    ebegin "Starting Mozilla Sync"
+    cd "${FSYNC_DIR}"
+    start-stop-daemon --start --quiet --user ${FSYNC_USER}:${FSYNC_GROUP} \
+        --exec paster serve ${FSYNC_ENV} -- --daemon \
+        --pid-file "${FSYNC_PIDFILE}"
+    eend $?
 }
 
 stop() {
-	ebegin "Stopping Mozilla Sync"
-	cd "${FSYNC_DIR}"
-	start-stop-daemon --signal INT --quiet --pidfile "${FSYNC_PIDFILE}"
-	eend $?
+    ebegin "Stopping Mozilla Sync"
+    cd "${FSYNC_DIR}"
+    start-stop-daemon --signal INT --quiet --pidfile "${FSYNC_PIDFILE}"
+    eend $?
 }
