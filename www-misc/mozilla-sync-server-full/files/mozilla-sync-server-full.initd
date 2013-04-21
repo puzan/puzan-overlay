@@ -11,6 +11,17 @@ depend() {
 }
 
 start() {
+    local piddir=$(dirname ${FSYNC_PIDFILE})
+
+    if [ ! -d ${piddir} ] ; then
+        ebegin "Making ${piddir}"
+        mkdir -p ${piddir}
+        eend $?
+        ebegin "Changing permissions of ${piddir}"
+        chown ${FSYNC_USER}:${FSYNC_GROUP} ${piddir}
+        eend $?
+    fi
+
     ebegin "Starting Mozilla Sync"
     cd "${FSYNC_DIR}"
     start-stop-daemon --start --quiet --user ${FSYNC_USER}:${FSYNC_GROUP} \
