@@ -17,7 +17,7 @@ KEYWORDS="~amd64 ~x86"
 IUSE="+completion"
 
 RDEPEND="completion? ( dev-vcs/git-flow-completion )
-	>=dev-libs/shflags-1.0.3"
+	>=dev-util/shflags-1.0.3"
 
 src_prepare() {
 	cd "${WORKDIR}"/${GITHUB_USER}-${PN}-*
@@ -26,7 +26,7 @@ src_prepare() {
 	sed -i \
 		-e '/^export GITFLOW_DIR=/s|$(dirname "$0")|/usr/libexec/git-flow|' \
 		-e "s|\$GITFLOW_DIR/gitflow-common|/usr/$(get_libdir)/gitflow-common|" \
-		-e "s|\$GITFLOW_DIR/gitflow-shFlags|/usr/$(get_libdir)/shflags|" \
+		-e "s|\$GITFLOW_DIR/gitflow-shFlags|/usr/share/misc/shflags|" \
 		git-flow || die "sed failed"
 
 }
