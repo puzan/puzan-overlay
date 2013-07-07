@@ -13,7 +13,7 @@ S=${WORKDIR}
 
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="~x86"
+KEYWORDS=""
 IUSE="demo"
 
 DEPEND=">=dev-lang/python-2.5
@@ -54,4 +54,3 @@ src_install() {
 		[[ -s "${d}" ]] && dodoc "${d}"
 	done
 }
-

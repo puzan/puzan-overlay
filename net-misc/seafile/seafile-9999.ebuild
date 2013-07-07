@@ -13,7 +13,7 @@ S=${WORKDIR}
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS=""
 IUSE="gtk server httpserver client python"
 
 DEPEND=">=dev-lang/python-2.5[sqlite]

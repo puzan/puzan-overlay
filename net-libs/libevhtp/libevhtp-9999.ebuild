@@ -13,7 +13,7 @@ S=${WORKDIR}
 
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS="~x86"
+KEYWORDS=""
 IUSE=""
 
 DEPEND=">=dev-libs/libevent-2"
