@@ -19,7 +19,7 @@ DEPEND=">=dev-lang/python-2.5[sqlite]
 	net-libs/ccnet[client?,server?,python]
 	dev-python/webpy
 	dev-python/mako
-	server? ( net-libs/libevhtp
+	server? ( =net-libs/libevhtp-1.1.7
 			  dev-python/django
 			  dev-python/Djblets
 			  www-servers/gunicorn
