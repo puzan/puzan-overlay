@@ -34,6 +34,13 @@ pkg_setup() {
 	python_pkg_setup
 }
 
+src_prepare() {
+	# Add -lpthread for tool build
+	epatch "${FILESDIR}/${P}-lpthread.patch"
+
+	autoreconf
+}
+
 src_configure() {
 	econf $(use_enable gtk gui) \
 		$(use_enable server) \
