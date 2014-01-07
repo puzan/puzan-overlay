@@ -15,7 +15,9 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="=net-misc/seafile-${PV}[client,-server]
+DEPEND="=net-misc/seafile-2.0.5[client]
+	=net-libs/libsearpc-1.1.0
+	=net-libs/ccnet-1.3.8
 	dev-qt/qtgui:4
 	dev-util/cmake
 	dev-libs/jansson
