@@ -15,6 +15,7 @@ IUSE=""
 
 DEPEND="=net-misc/seafile-2.0.6[server]
 	=net-libs/libsearpc-1.1.0
-	=net-libs/ccnet-1.3.9"
+	=net-libs/ccnet-1.3.9
+	=net-misc/seahub-2.0.4"
 
 RDEPEND=""

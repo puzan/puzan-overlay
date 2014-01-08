@@ -25,7 +25,7 @@ DEPEND=">=dev-lang/python-2.5[sqlite]
 	dev-python/mako
 	server? ( =net-libs/libevhtp-1.1.7
 			  dev-python/django
-			  dev-python/Djblets
+			  =dev-python/Djblets-0.6*
 			  www-servers/gunicorn
 			  dev-python/chardet )
 	sys-devel/gettext
@@ -51,4 +51,16 @@ src_configure() {
 
 	# Fix problem with multitreading build
 	MAKEOPTS="-j1"
+}
+
+src_install() {
+	einstall || die "einstall failed"
+
+	# if server
+	if use server; then
+		insinto /usr/share/seafile
+		doins -r scripts
+		fperms +x /usr/share/seafile/scripts/*.sh
+		fperms +x /usr/share/seafile/scripts/upgrade/*.sh
+	fi
 }
