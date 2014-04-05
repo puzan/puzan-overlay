@@ -1,0 +1,20 @@
+# Config file for /etc/init.d/hts
+
+# Server name (localhost, etc.)
+SERVER_NAME="your.server.com"
+
+# TCP port that we want to forward (this is what the client connects to)
+TCP_FORWARD_PORT="80"
+
+# TCP port that we want to forward to (this is what actually answers
+# on the server)
+# ex. 22 for ssh, 23 for telnet
+TCP_LISTEN_PORT="22"
+
+HTTPTUNNEL_PID="/var/run/httptunnel/hts.pid"
+HTTPTUNNEL_USER="httptunnel"
+HTTPTUNNEL_GROUP="httptunnel"
+
+# Any extra miscellaneous options we want to pass to hts
+# Make sure to include the - or -- before each option
+HTS_OPTIONS=""
