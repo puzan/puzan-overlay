@@ -6,24 +6,31 @@ EAPI=4
 
 inherit eutils autotools python
 
-MY_P=seafile-${PV}
-S="${WORKDIR}/${MY_P}/${PN}"
+SEAFILE_VERSION=2.0.4-server
+SEAFILE_TAG="v${SEAFILE_VERSION}"
+S="${WORKDIR}/${PN}-${SEAFILE_VERSION}"
 
 DESCRIPTION="Networking library for Seafile"
 HOMEPAGE="http://www.seafile.com"
-SRC_URI="http://seafile.googlecode.com/files/${MY_P}.tar.gz"
+SRC_URI="https://github.com/haiwen/${PN}/archive/${SEAFILE_TAG}.tar.gz -> ${P}.tar.gz"
 
 SLOT="0"
 LICENSE="GPL-2"
 KEYWORDS="~amd64 ~x86"
-IUSE="-demo client server python cluster ldap -mysql"
+IUSE="-demo client -server python cluster ldap"
 
 DEPEND="net-libs/libsearpc
 	>=dev-libs/glib-2.0
+	>=dev-lang/vala-0.8
+	app-admin/eselect-vala
 	server? ( dev-db/libzdb )
 	dev-util/pkgconfig"
 
 RDEPEND=""
+
+src_prepare() {
+	./autogen.sh || die "Autogen failed"
+}
 
 src_configure() {
 	econf $(use_enable demo compile-demo) \
@@ -32,7 +39,6 @@ src_configure() {
 		$(use_enable python) \
 		$(use_enable cluster) \
 		$(use_enable ldap) \
-		$(use_enable mysql) \
 		--enable-console \
 		|| die "econf failed"
 

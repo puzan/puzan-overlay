@@ -4,17 +4,20 @@
 
 EAPI=4
 
-inherit eutils autotools git-2 python
+inherit eutils autotools python
+
+SEAFILE_VERSION=2.0.8
+SEAFILE_TAG="v${SEAFILE_VERSION}"
+S="${WORKDIR}/${PN}-${SEAFILE_VERSION}"
 
 DESCRIPTION="RPC library for Seafile"
 HOMEPAGE="http://www.seafile.com"
-EGIT_REPO_URI="git://github.com/haiwen/libsearpc.git"
-S=${WORKDIR}
+SRC_URI="https://github.com/haiwen/${PN}/archive/${SEAFILE_TAG}.tar.gz -> ${P}.tar.gz"
 
 SLOT="0"
 LICENSE="GPL-2"
-KEYWORDS=""
-IUSE="demo"
+KEYWORDS="~amd64 ~x86"
+IUSE="-demo"
 
 DEPEND=">=dev-lang/python-2.5
 	>=dev-libs/glib-2.0
@@ -25,10 +28,6 @@ RDEPEND=""
 pkg_setup() {
 	python_set_active_version 2
 	python_pkg_setup
-}
-
-src_unpack() {
-	git-2_src_unpack
 }
 
 src_prepare() {
@@ -43,8 +42,7 @@ src_configure() {
 
 src_install() {
 	#Fix wrong prefix in libsearpc.pc file
-	cat "${S}/libsearpc.pc" | sed 's/(DESTDIR)//' > "${S}/libsearpc.pc_m"
-	mv "${S}/libsearpc.pc_m" "${S}/libsearpc.pc"
+	sed -i 's/(DESTDIR)//' "${S}/libsearpc.pc"
 
 	emake DESTDIR="${D}" install
 

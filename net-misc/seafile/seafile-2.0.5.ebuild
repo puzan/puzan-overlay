@@ -6,14 +6,18 @@ EAPI=4
 
 inherit eutils python
 
+SEAFILE_VERSION=2.0.8
+SEAFILE_TAG="v${SEAFILE_VERSION}"
+S="${WORKDIR}/${PN}-${SEAFILE_VERSION}"
+
 DESCRIPTION="Cloud file syncing software"
 HOMEPAGE="http://www.seafile.com"
-SRC_URI="http://seafile.googlecode.com/files/${P}.tar.gz"
+SRC_URI="https://github.com/haiwen/${PN}/archive/${SEAFILE_TAG}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
-IUSE="gtk server client"
+IUSE="-server client"
 
 DEPEND=">=dev-lang/python-2.5[sqlite]
 	net-libs/ccnet[client?,server?,python]
@@ -34,12 +38,16 @@ pkg_setup() {
 	python_pkg_setup
 }
 
+src_prepare() {
+	./autogen.sh || die "Autogen failed"
+}
+
 src_configure() {
-	econf $(use_enable gtk gui) \
-		$(use_enable server) \
+	econf $(use_enable server) \
 		$(use_enable client) \
 		--enable-console \
 		--enable-python \
+		--disable-gui \
 		|| die "econf failed"
 
 	# Fix problem with multitreading build
