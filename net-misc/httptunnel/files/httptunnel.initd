@@ -1,0 +1,31 @@
+#!/sbin/runscript
+
+depend() {
+    after net
+}
+
+start() {
+    local piddir=$(dirname ${HTTPTUNNEL_PID})
+
+    if [ ! -d ${piddir} ] ; then
+        ebegin "Making ${piddir}"
+        mkdir -p ${piddir}
+        eend $?
+        ebegin "Changing permissions of ${piddir}"
+        chown ${HTTPTUNNEL_USER}:${HTTPTUNNEL_GROUP} ${piddir}
+        eend $?
+    fi
+
+    ebegin "Starting httptunnel server tunnel"
+    start-stop-daemon --start --quiet \
+        --user ${HTTPTUNNEL_USER}:${HTTPTUNNEL_GROUP} \
+        --exec hts -- ${HTS_OPTIONS} -p ${HTTPTUNNEL_PID} \
+        -F ${SERVER_NAME}:${TCP_LISTEN_PORT} ${TCP_FORWARD_PORT}
+    eend $? "Failed to create httptunnel"
+}
+
+stop()  {
+    ebegin "Stopping httptunnel server tunnel"
+    start-stop-daemon --stop --quiet --pidfile "${HTTPTUNNEL_PID}"
+    eend $? "Failed to stop httptunnel"
+}
